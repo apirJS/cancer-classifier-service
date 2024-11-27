@@ -1,15 +1,43 @@
-# Elysia with Bun runtime
+# Terraform project
+### Skin cancer classification app
+![Dicoding Academy](https://dicoding-web-img.sgp1.cdn.digitaloceanspaces.com/original/academy/dos-5ec56ee9e3227762be5d6e7693699d2120240110160337.jpeg)
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
+#### Create ```terraform/terraform.tfvars``` 
 ```bash
-bun create elysia ./elysia-example
+service_account_key = "path/to/serviceaccountkey.json"
+project_id          = "project"
+region              = "region"
+zone                = "zone"
 ```
 
-## Development
-To start the development server run:
+#### Enable required APIs
 ```bash
-bun run dev
+gcloud services enable artifactregistry.googleapis.com \
+    cloudbuild.googleapis.com \
+    appengine.googleapis.com \
+    firestore.googleapis.com \
+    run.googleapis.com \
+    storage.googleapis.com
+```
+#### Grant necessary roles to the service account
+```bash
+App Engine Admin
+App Engine Creator
+Artifact Registry Administrator
+Cloud Datastore Owner
+Cloud Run Admin
+Service Account User
+Service Usage Admin
+Storage Admin
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+#### Run terraform
+```bash
+terraform init
+
+terraform plan
+
+terraform apply
+```
+
+#### Specify your bucket location on sources/frontend/api.js

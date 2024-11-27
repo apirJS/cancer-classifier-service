@@ -1,18 +1,22 @@
 {
   "name": "@bun-examples/elysia",
+  "type": "module",
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
-  },
-  "devDependencies": {
-    "bun-types": "latest"
+    "@google-cloud/firestore": "^7.10.0",
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "elysia": "^1.1.25",
+    "@elysiajs/cors": "latest"
   },
   "module": "src/index.js",
   "bun-create": {
     "start": "bun run src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14"
   }
 }
