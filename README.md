@@ -40,4 +40,4 @@ terraform plan
 terraform apply
 ```
 
-#### Specify your bucket location on sources/frontend/api.js
+#### Specify your bucket path on src/index.ts
