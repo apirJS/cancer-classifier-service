@@ -23,35 +23,35 @@ resource "google_storage_bucket" "bucket" {
 
 resource "google_storage_bucket_object" "model" {
   name       = "model.json"
-  source     = "../model/model.json"
+  source     = "/home/apriliyantoecha1/cancer-classifier-service/sources/backend/model/model.json"
   bucket     = google_storage_bucket.bucket.name
   depends_on = [google_storage_bucket.bucket]
 }
 
 resource "google_storage_bucket_object" "model_bin_1of4" {
   name       = "group1-shard1of4.bin"
-  source     = "../model/group1-shard1of4.bin"
+  source     = "/home/apriliyantoecha1/cancer-classifier-service/sources/backend/model/group1-shard1of4.bin"
   bucket     = google_storage_bucket.bucket.name
   depends_on = [google_storage_bucket.bucket]
 }
 
 resource "google_storage_bucket_object" "model_bin_2of4" {
   name       = "group1-shard2of4.bin"
-  source     = "../model/group1-shard2of4.bin"
+  source     = "/home/apriliyantoecha1/cancer-classifier-service/sources/backend/model/group1-shard2of4.bin"
   bucket     = google_storage_bucket.bucket.name
   depends_on = [google_storage_bucket.bucket]
 }
 
 resource "google_storage_bucket_object" "model_bin_3of4" {
   name       = "group1-shard3of4.bin"
-  source     = "../model/group1-shard3of4.bin"
+  source     = "/home/apriliyantoecha1/cancer-classifier-service/sources/backend/model/group1-shard3of4.bin"
   bucket     = google_storage_bucket.bucket.name
   depends_on = [google_storage_bucket.bucket]
 }
 
 resource "google_storage_bucket_object" "model_bin_4of4" {
   name       = "group1-shard4of4.bin"
-  source     = "../model/group1-shard4of4.bin"
+  source     = "/home/apriliyantoecha1/cancer-classifier-service/sources/backend/model/group1-shard4of4.bin"
   bucket     = google_storage_bucket.bucket.name
   depends_on = [google_storage_bucket.bucket]
 }
@@ -68,7 +68,7 @@ resource "google_artifact_registry_repository" "repository" {
 resource "null_resource" "build_and_push_image" {
 
   provisioner "local-exec" {
-    command = "gcloud builds submit -t ${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.repository.repository_id}/backend:latest ../"
+    command = "gcloud builds submit -t ${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.repository.repository_id}/backend:latest /home/apriliyantoecha1/cancer-classifier-service/sources/backend"
   }
 
   depends_on = [google_artifact_registry_repository.repository]
@@ -91,7 +91,6 @@ resource "google_cloud_run_v2_service" "backend" {
     containers {
       image = "${google_artifact_registry_repository.repository.location}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.repository.repository_id}/backend:latest"
       ports {
-        name = "http"
         container_port = 8080
       }
     }
@@ -102,8 +101,8 @@ resource "google_cloud_run_v2_service" "backend" {
 
 data "archive_file" "app_engine_source_zip" {
   type        = "zip"
-  source_dir  = "../sources"
-  output_path = "../sources/frontend.zip"
+  source_dir  = "/home/apriliyantoecha1/cancer-classifier-service/sources/zip"
+  output_path = "/home/apriliyantoecha1/cancer-classifier-service/sources/zip/frontend.zip"
 }
 
 resource "google_storage_bucket_object" "app_engine_source_zip" {
@@ -116,6 +115,7 @@ resource "google_app_engine_application" "app" {
   project     = var.project_id
   location_id = var.region
 }
+
 
 resource "google_app_engine_standard_app_version" "app_version" {
   service    = "default"
@@ -178,5 +178,5 @@ resource "google_app_engine_standard_app_version" "app_version" {
     PORT        = "8080"
   }
 
-  depends_on = [google_cloud_run_v2_service.backend, google_app_engine_application.app, google_storage_bucket_object.app_engine_source_zip]
+  depends_on = [google_cloud_run_v2_service.backend, google_storage_bucket_object.app_engine_source_zip]
 }
