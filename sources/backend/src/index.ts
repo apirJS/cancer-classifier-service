@@ -10,7 +10,6 @@ const firestore = new Firestore({
   databaseId: '(default)',
 });
 
-
 async function savePrediction(data: {
   id: `${string}-${string}-${string}-${string}-${string}`;
   result: string;
