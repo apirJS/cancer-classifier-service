@@ -101,7 +101,7 @@ resource "google_cloud_run_v2_service" "backend" {
 
 data "archive_file" "app_engine_source_zip" {
   type        = "zip"
-  source_dir  = "/home/apriliyantoecha1/cancer-classifier-service/sources/zip"
+  source_dir  = "/home/apriliyantoecha1/cancer-classifier-service/sources/zip/asclepius-main"
   output_path = "/home/apriliyantoecha1/cancer-classifier-service/sources/zip/frontend.zip"
 }
 

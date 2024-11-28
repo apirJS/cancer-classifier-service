@@ -10,6 +10,8 @@ region              = "region"
 zone                = "zone"
 ```
 
+#### Run ```npm install``` on ```asclepius``` directory
+
 #### Enable required APIs
 ```bash
 gcloud services enable artifactregistry.googleapis.com \
