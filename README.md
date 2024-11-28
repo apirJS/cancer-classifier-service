@@ -42,4 +42,6 @@ terraform apply
 
 #### Specify your bucket path on src/index.ts
 
+#### Change paths on main.tf file
+
 #### Note: ```I don't know why app engine is not working. But anything other than that is working```
